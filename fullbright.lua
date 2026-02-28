@@ -1,8 +1,8 @@
--- CONFIGURAÇÃO
-getgenv().FullBrightKey = Enum.KeyCode.F4
+-- FULL BRIGHT com toggle F4 (compatível com XENO)
 
--- FULL BRIGHT BASE
 local Lighting = game:GetService("Lighting")
+
+local fullbrightOn = false
 
 local function EnableFullBright()
     Lighting.Brightness = 2
@@ -17,23 +17,17 @@ local function DisableFullBright()
     Lighting.ClockTime = 12
     Lighting.FogEnd = 1000
     Lighting.GlobalShadows = true
-    Lighting.OutdoorAmbient = Color3.new(0,0,0)
+    Lighting.OutdoorAmbient = Color3.new(0, 0, 0)
 end
 
-local fullbrightOn = false
-EnableFullBright()
-
--- KEYBIND 100% COMPATÍVEL COM XENO
-game:GetService("UserInputService").InputBegan:Connect(function(input, gp)
-    if gp then return end
-    if input.KeyCode == getgenv().FullBrightKey then
-        fullbrightOn = not fullbrightOn
-        if fullbrightOn then
-            EnableFullBright()
-            print("FULLBRIGHT ATIVADO")
-        else
-            DisableFullBright()
-            print("FULLBRIGHT DESATIVADO")
-        end
+-- Keybind do Xeno que funciona
+Xeno.bind("F4", function()
+    fullbrightOn = not fullbrightOn
+    if fullbrightOn then
+        EnableFullBright()
+        Xeno.notify("FullBright", "Ligado!")
+    else
+        DisableFullBright()
+        Xeno.notify("FullBright", "Desligado!")
     end
 end)
